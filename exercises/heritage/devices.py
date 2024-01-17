@@ -1,10 +1,10 @@
 class Device:
     __slots__ = [ "_name", "_location", "_status"]
 
-    def __init__(self, name, location):
+    def __init__(self, name, location, status='ON'):
         self._name = name
         self._location = location
-        self._status = 'ON'
+        self._status = status
 
     @property
     def name(self):
@@ -37,10 +37,10 @@ class Light(Device):
     __slots__ = ["_brightness", "_color"]
 
     def __init__(self, name, location, brightness, color):
-        self._name = name
-        self._location = location
+        super().__init__(name, location)
         self._brightness = brightness
         self._color = color
+
 
     @property
     def brightness(self):
@@ -58,9 +58,8 @@ class Light(Device):
 class Thermostat(Device):
     __slots__ = ["_current_temperature", "_target_temperature"]
 
-    def __init__(self, name, location, current_temperature, target_temperature):
-        self._name = name
-        self._location = location
+    def __init__(self, name, location, current_temperature, target_temperature, status='ON'):
+        super().__init__(name, location)
         self._current_temperature = current_temperature
         self._target_temperature = target_temperature
 
@@ -84,9 +83,8 @@ class Thermostat(Device):
 class SmartTV(Device):
     __slots__ = [ "_channel"]
 
-    def __init__(self, name, location, channel):
-        self._name = name
-        self._location = location
+    def __init__(self, name, location, channel, status='ON'):
+        super().__init__(name, location)
         self._channel = channel
 
     @property
@@ -114,9 +112,24 @@ assert device1._location == 'Кухня'
 device1.turn_on()
 assert device1.status == 'ON'
 
+light1 = Light('Лампа', 'Гостиная', 50, 'белый')
+light1.name == 'Лампа'
+light1.location == 'Гостиная'
+light1.status == 'ON'
+light1.brightness == '50'
+light1.color == 'белый'
+
 thermostat_1 = Thermostat('Термометр', 'Балкон', 10, 15)
 thermostat_1.name == 'Термометр'
 thermostat_1.location == 'Балкон'
 thermostat_1.status == 'ON'
 thermostat_1.current_temperature == 10
 thermostat_1.target_temperature == 15
+
+tv = SmartTV('Samsung', 'Спальня', 20)
+tv.name == 'Термометр'
+tv.location == 'Балкон'
+tv.status == 'ON'
+tv.channel == 20
+
+print('GOOD')
